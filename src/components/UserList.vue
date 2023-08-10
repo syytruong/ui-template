@@ -52,6 +52,7 @@ export default {
         display: flex;
         justify-content: center;
         border-bottom: 1px solid #000;
+        height: 45px;
     }
 
     .user-input input {
