@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-    <header>
-      <!-- TODO: Header here -->
-    </header>
-
     <div class="main-container">
       <user-list></user-list>
       <!-- <skills-list></skills-list> -->
@@ -25,12 +21,23 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  #app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;  
+  }
+
+  .main-container {
+    display: flex;
+    height: 100%;
+    border: 1px solid #000;
+    min-height: 600px;
+  }
+
+  .user-list {
+    width: 25%;
+  }
+
+  .skills-list {
+    width: 75%;
+  }
+
 </style>

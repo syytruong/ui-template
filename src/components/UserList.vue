@@ -1,13 +1,17 @@
 <template>
     <div class="user-list">
-        <input type="text" v-model="newUser" placeholder="Enter username" @keyup.enter="addUser">
+        <div class="user-input">
+            <input type="text" v-model="newUser" placeholder="Enter username" @keyup.enter="addUser">
+        </div>
+    
+        <ul>
+            <li v-for="(user, index) in users" :key="user + index" :class="{ active: user === activeUser && activeUserIndex === index}">
+                <router-link :to="`/users/${user}`" @click="setActiveUser(index, user)">
+                    <span>{{ user }}</span>
+                </router-link>
+            </li>
+        </ul>
     </div>
-
-    <ul>
-        <li v-for="(user, index) in users" :key="user + index" :class="{ active: user === activeUser && activeUserIndex === index}">
-            <router-link :to="`/users/${user}`" @click="setActiveUser(index, user)">{{ user }}</router-link>
-        </li>
-    </ul>
 </template>
 
 <script>
@@ -39,3 +43,53 @@ export default {
     }
 }
 </script>
+
+<style>
+    .user-list {
+        border-right: 1px solid #000;
+        padding: 10px 0px;
+    }
+
+    .user-input {
+        display: flex;
+        justify-content: center;
+        border-bottom: 1px solid #000;
+    }
+
+    .user-input input {
+        width: 80%;
+        padding: 5px;
+        margin-bottom: 10px;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        cursor: pointer;
+    }
+
+    .user-input input:focus {
+        outline: none;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    li {
+        padding: 5px;
+        cursor: pointer;
+        width: 70%
+    }
+
+    li.active {
+        border-bottom: 1px solid #000;
+    }
+
+    li span {
+        font-size: 2.5rem;
+    }
+</style>
