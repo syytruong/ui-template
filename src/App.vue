@@ -1,15 +1,25 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <header>
+      <!-- TODO: Header here -->
+    </header>
+
+    <div class="main-container">
+      <user-list></user-list>
+      <skills-list></skills-list>
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import UserList from './components/UserList.vue'
+import SkillsList from './components/SkillsList.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    UserList,
+    SkillsList
   }
 }
 </script>
