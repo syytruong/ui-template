@@ -16,12 +16,12 @@
 
 <script>
 import { ref } from 'vue'
-// import { userRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 export default {
     name: 'UserList',
     setup() {
-        // const router = userRouter();
+        const router = useRouter();
         const newUser = ref('');
         const users = ref([]);
         const activeUser = ref([]);
@@ -37,7 +37,7 @@ export default {
             activeUser.value = user
         };
 
-        return { newUser, users, activeUser, addUser, setActiveUser };
+        return { newUser, users, activeUser, addUser, setActiveUser, router };
     }
 }
 </script>
