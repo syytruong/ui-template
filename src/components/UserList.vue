@@ -5,8 +5,8 @@
         </div>
     
         <ul>
-            <li v-for="(user, index) in users" :key="user + index" :class="{ active: user === activeUser && activeUserIndex === index}">
-                <router-link :to="`/users/${user}`" @click="setActiveUser(index, user)">
+            <li v-for="user in users" :key="user" :class="{ active: user === activeUser}">
+                <router-link :to="`/users/${user}`" @click="setActiveUser(user)">
                     <span>{{ user }}</span>
                 </router-link>
             </li>
@@ -25,21 +25,19 @@ export default {
         const newUser = ref('');
         const users = ref([]);
         const activeUser = ref([]);
-        const activeUserIndex = ref(-1);
 
         const addUser = () => {
-            if (newUser.value.trim() !== '') {
+            if (newUser.value.trim() !== '' && !users.value.includes(newUser.value)) {
                 users.value.push(newUser.value);
                 newUser.value = '';
             }
         };
 
-        const setActiveUser = (index, user) => {
-            activeUserIndex.value = index;
+        const setActiveUser = (user) => {
             activeUser.value = user
         };
 
-        return { newUser, users, activeUserIndex, activeUser, addUser, setActiveUser };
+        return { newUser, users, activeUser, addUser, setActiveUser };
     }
 }
 </script>
