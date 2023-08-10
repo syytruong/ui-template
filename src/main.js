@@ -1,12 +1,12 @@
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import App from './App.vue'
-
-import UserList from './components/UserList.vue'
+import MainLayout from './MainLayout.vue'
 
 // Define routes
 const routes = [
-    {path: '/users/:username', component: UserList}
+    {path: '/', component: MainLayout},
+    {path: '/users/:username', component: MainLayout, props: route => ({ username: route.params.username })},
 ];
 
 // Create router instance
