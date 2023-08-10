@@ -6,9 +6,9 @@
 
             <label>Level:</label>
             <select v-model="newSkill.level">
-                <option :value="NEW_SKILL_LEVEL.junior"></option>
-                <option :value="NEW_SKILL_LEVEL.middle"></option>
-                <option :value="NEW_SKILL_LEVEL.senior"></option>
+                <option :value="NEW_SKILL_LEVEL.junior">{{ NEW_SKILL_LEVEL.junior }}</option>
+                <option :value="NEW_SKILL_LEVEL.middle">{{ NEW_SKILL_LEVEL.middle }}</option>
+                <option :value="NEW_SKILL_LEVEL.senior">{{ NEW_SKILL_LEVEL.senior }}</option>
             </select>
 
             <button @click="addSkill">Add</button>
@@ -16,10 +16,20 @@
     </div>
 
     <div v-for="skill in skills" :key="skill.name" class="skill-item">
+        <span @click="editSkill(skill)">{{ skill.name }}</span>
+
         <div v-if="!skill.editing">
-            <span @click="editSkill(skill)">{{ skill.name }}</span>
             <progress :value="skill.levelValue" max="100"></progress>
             <button @click="removeSkill(skill)">X</button>
+        </div>
+
+        <div v-else>
+            <select v-model="skill.level">
+                <option :value="NEW_SKILL_LEVEL.junior">{{ NEW_SKILL_LEVEL.junior }}</option>
+                <option :value="NEW_SKILL_LEVEL.middle">{{ NEW_SKILL_LEVEL.middle }}</option>
+                <option :value="NEW_SKILL_LEVEL.senior">{{ NEW_SKILL_LEVEL.senior }}</option>
+            </select>
+            <button @click="updateSkill(skill)">Update</button>
         </div>
     </div>
 </template>
