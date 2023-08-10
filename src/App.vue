@@ -6,20 +6,20 @@
 
     <div class="main-container">
       <user-list></user-list>
-      <skills-list></skills-list>
+      <!-- <skills-list></skills-list> -->
     </div>
   </div>
 </template>
 
 <script>
 import UserList from './components/UserList.vue'
-import SkillsList from './components/SkillsList.vue'
+// import SkillsList from './components/SkillsList.vue'
 
 export default {
   name: 'App',
   components: {
     UserList,
-    SkillsList
+    // SkillsList
   }
 }
 </script>
