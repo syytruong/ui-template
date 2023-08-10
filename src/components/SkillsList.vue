@@ -19,7 +19,7 @@
         </div>
 
         <div class="skills">
-            <div v-for="skill in skills" :key="skill.name" class="skill-item">
+            <div v-for="skill in skillsMap[props?.username]" :key="skill.name" class="skill-item">
                 <span @click="editSkill(skill)">{{ skill.name }}</span>
         
                 <div v-if="!skill.editing">
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { NEW_SKILL_LEVEL } from '../constants/index'
 
 export default {
@@ -50,15 +50,34 @@ export default {
     props: ['username'],
     setup(props) {
         const newSkill = ref({ name: '', level: NEW_SKILL_LEVEL.junior});
-        const skills = ref([]);
+        const skillsMap = ref({});
 
+        watch(() => props.username, (newUserName) => {
+            if (!skillsMap.value[newUserName]) {
+                skillsMap.value[newUserName] = [];
+            }
+        });
+
+        /**
+         * This function add skill to skillsMap to save the user's skills
+         * It's required an activeUser as props.username to execute and prevent duplicate skills
+         */
         const addSkill = () => {
-            if (!props.username?.length) {
+            if (!props?.username?.length) {
                 return;
             }
             const trimSkillName = newSkill.value?.name?.trim();
-            if (trimSkillName !== '' && !skills?.value?.includes(trimSkillName)) {
-                skills.value.push({...newSkill.value, editing: false, levelValue: getLevelValue(newSkill.value.level)});
+
+            const index = skillsMap?.value[props.username].findIndex(
+                skill => skill.name.toLowerCase() === trimSkillName.toLowerCase())
+            ;
+
+            if (trimSkillName !== '' && index === -1) {
+                skillsMap.value[props.username].push({
+                    ...newSkill.value,
+                    editing: false,
+                    levelValue: getLevelValue(newSkill.value.level)
+                });
                 newSkill.value = {level: NEW_SKILL_LEVEL.junior};
             }
         };
@@ -73,10 +92,10 @@ export default {
         };
 
         const removeSkill = (skill) => {
-            const index = skills.value.findIndex(sk => sk.name === skill.name);
+            const index = skillsMap.value[props.username].findIndex(sk => sk.name === skill.name);
 
             if (index > -1) {
-                skills.value.splice(index, 1);
+                skillsMap.value[props.username].splice(index, 1);
             }
         }
 
@@ -93,7 +112,7 @@ export default {
             }
         };
 
-        return { newSkill, skills, addSkill, editSkill, updateSkill, removeSkill, NEW_SKILL_LEVEL };
+        return { newSkill, skillsMap, addSkill, editSkill, updateSkill, removeSkill, NEW_SKILL_LEVEL, props };
     }
 }
 </script>
