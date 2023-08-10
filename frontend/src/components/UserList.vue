@@ -91,4 +91,8 @@ export default {
     li span {
         font-size: 2.5rem;
     }
+
+    li a {
+        text-decoration: none;
+    }
 </style>
