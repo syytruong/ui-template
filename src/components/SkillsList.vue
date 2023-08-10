@@ -47,14 +47,19 @@ import { NEW_SKILL_LEVEL } from '../constants/index'
 
 export default {
     name: 'SkillsList',
-    setup() {
+    props: ['username'],
+    setup(props) {
         const newSkill = ref({ name: '', level: NEW_SKILL_LEVEL.junior});
         const skills = ref([]);
 
         const addSkill = () => {
-            if (newSkill.value?.name?.trim() !== '' && !skills?.value?.includes(newSkill.value.name.trim())) {
+            if (!props.username?.length) {
+                return;
+            }
+            const trimSkillName = newSkill.value?.name?.trim();
+            if (trimSkillName !== '' && !skills?.value?.includes(trimSkillName)) {
                 skills.value.push({...newSkill.value, editing: false, levelValue: getLevelValue(newSkill.value.level)});
-                newSkill.value = {};
+                newSkill.value = {level: NEW_SKILL_LEVEL.junior};
             }
         };
 
@@ -63,11 +68,16 @@ export default {
         };
 
         const updateSkill = (skill) => {
+            skill.levelValue = getLevelValue(skill.level);
             skill.editing = false;
         };
 
         const removeSkill = (skill) => {
-            skills.value.filter(sk => sk.name === skill.name);
+            const index = skills.value.findIndex(sk => sk.name === skill.name);
+
+            if (index > -1) {
+                skills.value.splice(index, 1);
+            }
         }
 
         const getLevelValue = (level) => {
@@ -101,6 +111,10 @@ export default {
         justify-content: space-around;
         border-bottom: 1px solid #000;
         height: 45px;
+    }
+
+    .skills {
+        margin-top: 100px;
     }
 
     .skill-input {
